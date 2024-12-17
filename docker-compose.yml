@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  qdrant:
+    image: qdrant/qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: call_center
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  langchain:
+    build:
+      context: ./langchain
+    volumes:
+      - ./documentation:/app/documentation
+    depends_on:
+      - qdrant
+
+  orchestrator:
+    build:
+      context: ./orchestrator
+    ports:
+      - "3000:3000"
+    depends_on:
+      - qdrant
+      - postgres
+    environment:
+      QDRANT_HOST: qdrant
+      POSTGRES_HOST: postgres
+
+  ui:
+    build:
+      context: ./ui
+    ports:
+      - "8080:80"
+
+  whisper:
+    image: openai/whisper
+    ports:
+      - "9000:9000"
+
+volumes:
+  qdrant_data:
+  postgres_data:
