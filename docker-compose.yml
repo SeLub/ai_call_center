@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   qdrant:
     image: qdrant/qdrant
@@ -6,15 +5,22 @@ services:
       - "6333:6333"
     volumes:
       - qdrant_data:/qdrant/storage
+    networks:
+      - app_network
 
   postgres:
     image: postgres:14
+    ports:
+      - "${POSTGRES_PORT}:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: call_center
+    env_file: .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_network
 
   langchain:
     build:
@@ -23,29 +29,51 @@ services:
       - ./documentation:/app/documentation
     depends_on:
       - qdrant
+    networks:
+      - app_network
 
   orchestrator:
-    build:
-      context: ./orchestrator
-    ports:
-      - "3000:3000"
-    depends_on:
-      - qdrant
-      - postgres
+    build: ./orchestrator
     environment:
-      QDRANT_HOST: qdrant
       POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: call_center
+      QDRANT_HOST: qdrant
+    depends_on:
+      - postgres
+      - qdrant
+    networks:
+      - app_network
 
   ui:
     build:
       context: ./ui
     ports:
       - "8080:80"
+    networks:
+      - app_network
 
   whisper:
-    image: openai/whisper
+    image: onerahmet/openai-whisper-asr-webservice:latest-gpu
+    environment:
+      - ASR_MODEL=large-v3
+      - ASR_ENGINE=openai_whisper
     ports:
       - "9000:9000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+     - app_network
+
+networks:
+  app_network:
+    driver: bridge
 
 volumes:
   qdrant_data:

@@ -1,0 +1,10 @@
+John Smith, 123 Maple Street, New York, NY 10001
+Emma Wilson, 456 Oak Avenue, Chicago, IL 60601
+Michael Brown, 789 Pine Road, Los Angeles, CA 90001
+Sarah Davis, 321 Cedar Lane, Houston, TX 77001
+James Anderson, 654 Birch Boulevard, Miami, FL 33101
+Lisa Martinez, 987 Elm Court, Seattle, WA 98101
+Robert Taylor, 147 Spruce Way, Boston, MA 02101
+Jennifer Garcia, 258 Willow Drive, Denver, CO 80201
+David Thompson, 369 Ash Street, Phoenix, AZ 85001
+Maria Rodriguez, 741 Palm Avenue, San Diego, CA 92101
