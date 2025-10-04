@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Rule Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Validation Rule Management</h1>
+            <p>Manage your validation rules and configurations</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <button id="loadRulesBtn" class="btn btn-primary">Load Rules</button>
+                <button id="addRuleBtn" class="btn btn-secondary">Add New Rule</button>
+                <input type="text" id="searchInput" placeholder="Search rules...">
+            </div>
+
+            <div class="content">
+                <div class="rules-list" id="rulesList">
+                    <!-- Rules will be loaded here dynamically -->
+                </div>
+
+                <div class="rule-form" id="ruleForm" style="display: none;">
+                    <h2 id="formTitle">Add New Rule</h2>
+                    <form id="validationRuleForm">
+                        <input type="hidden" id="ruleId">
+                        
+                        <div class="form-group">
+                            <label for="ruleName">Rule Name *</label>
+                            <input type="text" id="ruleName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ruleDescription">Description</label>
+                            <textarea id="ruleDescription" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ruleType">Rule Type *</label>
+                            <select id="ruleType" required>
+                                <option value="">Select a rule type</option>
+                                <option value="format">Format</option>
+                                <option value="range">Range</option>
+                                <option value="completeness">Completeness</option>
+                                <option value="uniqueness">Uniqueness</option>
+                                <option value="crossField">Cross Field</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="targetField">Target Field *</label>
+                            <input type="text" id="targetField" placeholder="e.g., *email*, *age*, fieldName" required>
+                        </div>
+                        
+                        <div class="form-group" id="configurationGroup">
+                            <label>Configuration</label>
+                            <div id="configFields">
+                                <!-- Configuration fields will be dynamically added based on rule type -->
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="severity">Severity</label>
+                            <select id="severity">
+                                <option value="error">Error</option>
+                                <option value="warning">Warning</option>
+                                <option value="info">Info</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Save Rule</button>
+                            <button type="button" id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div id="messageArea" class="message-area" style="display: none;"></div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Use Node.js base image
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy application files
+COPY . .
+
+# Expose port for the UI server
+EXPOSE 3005
+
+# Start the UI server
+CMD ["node", "ui-server.js"]

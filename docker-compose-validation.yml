@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   qdrant:
     image: qdrant/qdrant
@@ -39,14 +41,13 @@ services:
       - ./documentation:/app/documentation
     depends_on:
       - qdrant
-      - orchestrator  # Add dependency on orchestrator
     networks:
       - app_network
 
   orchestrator:
     build: ./orchestrator
     environment:
-      PORT: 3000
+      PORT: 300
       POSTGRES_HOST: postgres
       POSTGRES_USER: postgres
       OLLAMA_HOST: ai-agent
@@ -140,7 +141,7 @@ services:
     build:
       context: ./validation-framework
     ports:
-      - "3003:3001"  # Main validation API
+      - "3003:3001" # Main validation API
       - "3004:3002"  # Rule management API
     volumes:
       - ./validation-framework/rules:/app/rules

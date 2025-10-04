@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Validation Rule Schema",
+  "description": "Schema for defining validation rules that can be applied to any dataset",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the validation rule"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the validation rule"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what the rule validates"
+    },
+    "ruleType": {
+      "type": "string",
+      "enum": [
+        "format",
+        "range",
+        "completeness",
+        "uniqueness",
+        "crossField",
+        "custom"
+      ],
+      "description": "Type of validation rule"
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Field name to apply the rule to (supports wildcards and patterns)"
+        },
+        "documentType": {
+          "type": "string",
+          "description": "Document type to apply the rule to (optional, applies to all if not specified)"
+        }
+      },
+      "required": ["field"]
+    },
+    "configuration": {
+      "type": "object",
+      "description": "Rule-specific configuration parameters"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["error", "warning", "info"],
+      "default": "error",
+      "description": "Severity level for validation failures"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the rule is currently enabled"
+    }
+  },
+  "required": ["id", "name", "ruleType", "target"],
+  "definitions": {
+    "formatRule": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "description": "Regular expression pattern for format validation"
+        },
+        "dataType": {
+          "type": "string",
+          "enum": ["string", "number", "date", "email", "phone", "url"],
+          "description": "Expected data type"
+        }
+      }
+    },
+    "rangeRule": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": ["number", "string"],
+          "description": "Minimum allowed value"
+        },
+        "max": {
+          "type": ["number", "string"],
+          "description": "Maximum allowed value"
+        },
+        "inclusive": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether min/max values are inclusive"
+        }
+      }
+    },
+    "completenessRule": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether the field is required"
+        },
+        "minLength": {
+          "type": "number",
+          "description": "Minimum length for string fields"
+        },
+        "notEmpty": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether the field must not be empty"
+        }
+      }
+    },
+    "uniquenessRule": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string",
+          "enum": ["field", "document", "collection"],
+          "default": "collection",
+          "description": "Scope for uniqueness validation"
+        }
+      }
+    },
+    "crossFieldRule": {
+      "type": "object",
+      "properties": {
+        "dependentField": {
+          "type": "string",
+          "description": "Field that this rule depends on"
+        },
+        "condition": {
+          "type": "string",
+          "description": "Condition that triggers this rule"
+        }
+      }
+    }
+  }
+}

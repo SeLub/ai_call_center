@@ -1,0 +1,21 @@
+{
+  "name": "generic-data-validation-framework",
+  "version": "1.0.0",
+  "description": "Generic Data Validation and Consistency Framework",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "jest",
+    "dev": "nodemon src/index.js",
+    "ui": "node ui-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ajv": "^8.12.0",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1"
+  }
+}

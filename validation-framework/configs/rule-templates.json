@@ -1,0 +1,68 @@
+{
+  "templates": [
+    {
+      "id": "email-format",
+      "name": "Email Format Validation",
+      "description": "Validates that a field contains a properly formatted email address",
+      "ruleType": "format",
+      "target": {
+        "field": "*email*"
+      },
+      "configuration": {
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+        "dataType": "email"
+      }
+    },
+    {
+      "id": "phone-format",
+      "name": "Phone Number Format Validation",
+      "description": "Validates that a field contains a properly formatted phone number",
+      "ruleType": "format",
+      "target": {
+        "field": "*phone*"
+      },
+      "configuration": {
+        "pattern": "^\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$",
+        "dataType": "phone"
+      }
+    },
+    {
+      "id": "age-range",
+      "name": "Age Range Validation",
+      "description": "Validates that an age field is within a reasonable range",
+      "ruleType": "range",
+      "target": {
+        "field": "*age*"
+      },
+      "configuration": {
+        "min": 0,
+        "max": 150
+      }
+    },
+    {
+      "id": "required-field",
+      "name": "Required Field Validation",
+      "description": "Ensures that a field is present and not empty",
+      "ruleType": "completeness",
+      "target": {
+        "field": "*"
+      },
+      "configuration": {
+        "required": true,
+        "notEmpty": true
+      }
+    },
+    {
+      "id": "unique-id",
+      "name": "Unique Identifier Validation",
+      "description": "Ensures that an identifier field is unique within the collection",
+      "ruleType": "uniqueness",
+      "target": {
+        "field": "*id"
+      },
+      "configuration": {
+        "scope": "collection"
+      }
+    }
+  ]
+}

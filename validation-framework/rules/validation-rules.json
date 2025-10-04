@@ -1,0 +1,117 @@
+{
+  "rules": [
+    {
+      "id": "email-format",
+      "name": "Email Format Validation",
+      "description": "Validates that a field contains a properly formatted email address",
+      "ruleType": "format",
+      "target": {
+        "field": "*email*"
+      },
+      "configuration": {
+        "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+        "dataType": "email"
+      }
+    },
+    {
+      "id": "age-range",
+      "name": "Age Range Validation",
+      "description": "Validates that an age field is within a reasonable range",
+      "ruleType": "range",
+      "target": {
+        "field": "*age*"
+      },
+      "configuration": {
+        "min": 0,
+        "max": 150
+      }
+    },
+    {
+      "id": "required-field",
+      "name": "Required Field Validation",
+      "description": "Ensures that a field is present and not empty",
+      "ruleType": "completeness",
+      "target": {
+        "field": "*"
+      },
+      "configuration": {
+        "required": true,
+        "notEmpty": true
+      }
+    },
+    {
+      "id": "adult-id-verification",
+      "name": "Adult ID Verification",
+      "description": "When age is 18 or above, ID verification is required",
+      "ruleType": "crossField",
+      "target": {
+        "field": "age"
+      },
+      "configuration": {
+        "type": "conditional",
+        "conditionField": "age",
+        "conditionValue": 18,
+        "conditionOperator": "greaterThanOrEqual",
+        "targetField": "idVerification",
+        "targetCondition": {
+          "type": "required",
+          "message": "ID verification is required for adults (18+)"
+        }
+      }
+    },
+    {
+      "id": "email-or-phone-required",
+      "name": "Email or Phone Required",
+      "description": "Either email or phone must be provided",
+      "ruleType": "crossField",
+      "target": {
+        "field": "*"
+      },
+      "configuration": {
+        "type": "businessRule",
+        "businessRule": "email-phone-required"
+      }
+    },
+    {
+      "id": "minors-consent",
+      "name": "Minors Consent Validation",
+      "description": "For users under 18, guardian consent and email are required",
+      "ruleType": "crossField",
+      "target": {
+        "field": "age"
+      },
+      "configuration": {
+        "type": "businessRule",
+        "businessRule": "minors-consent"
+      }
+    },
+    {
+      "id": "salary-verification",
+      "name": "High Salary Verification",
+      "description": "For salaries above 10,000, verification is required",
+      "ruleType": "crossField",
+      "target": {
+        "field": "salary"
+      },
+      "configuration": {
+        "type": "businessRule",
+        "businessRule": "salary-verification"
+      }
+    },
+    {
+      "id": "date-comparison",
+      "name": "Date Comparison Validation",
+      "description": "Start date must be before end date",
+      "ruleType": "crossField",
+      "target": {
+        "field": "startDate"
+      },
+      "configuration": {
+        "type": "comparison",
+        "field1": "startDate",
+        "field2": "endDate",
+        "comparisonOperator": "lessThan"
+      }
+    }
+  ]
+}

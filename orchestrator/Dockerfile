@@ -10,11 +10,11 @@ RUN npm install
 COPY . .
 
 # Environment variables
-ENV POSTGRES_HOST=postgres
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_PASSWORD=postgres
-ENV POSTGRES_DB=call_center
-ENV QDRANT_HOST=qdrant
+# ENV POSTGRES_HOST=postgres
+# ENV POSTGRES_USER=postgres
+# ENV POSTGRES_PASSWORD=postgres
+# ENV POSTGRES_DB=call_center
+# ENV QDRANT_HOST=qdrant
 
 EXPOSE 3000
 
